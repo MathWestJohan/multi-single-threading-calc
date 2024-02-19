@@ -1,4 +1,4 @@
-package ntnu.no;
+package ntnu.no.MultiThread;
 
 import java.io.BufferedReader;
 import java.io.IOException;
