@@ -1,0 +1,14 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.( ¯—¢ûÿÿÿÿ
+X
+java:S2094	"BRemove this empty class, write its code or make it an "interface".(ñ·ÍŸ
+I
+java:S1128"3Remove this unused import 'java.io.BufferedReader'.(€é²Å
+K
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úýÿÿÿÿ
+L
+java:S1128"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ
+F
+java:S1128"0Remove this unused import 'java.io.PrintWriter'.(ÓÞÏÛ
+B
+java:S1128",Remove this unused import 'java.net.Socket'.(­‡àú
