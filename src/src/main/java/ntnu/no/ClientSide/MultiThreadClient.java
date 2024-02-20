@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class MultiThreadClientTest {
+public class MultiThreadClient {
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 10025;
     private static final int NUM_CLIENTS = 4;
