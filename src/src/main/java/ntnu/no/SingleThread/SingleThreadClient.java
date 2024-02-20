@@ -8,29 +8,37 @@ import java.net.Socket;
 
 public class SingleThreadClient {
     public static void main(String[] args) {
+        long totalStartTime = System.nanoTime();
+
         try (Socket socket = new Socket("localhost", 5555)) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
             System.out.println("Connected to server.");
-            System.out.println("Enter operations in the format 'Number Number Operation' Operations: A S M D , type 'exit' to quit:");
+            System.out.println("Automatically sending 10 requests to the server for each operation.");
 
-            String input;
-            while (!(input = reader.readLine()).equalsIgnoreCase("exit")) {
-                long startTime = System.nanoTime();
+            char[] operations = {'A', 'S', 'M', 'D'};
+            String[] operationNames = {"Addition", "Subtraction", "Multiplication", "Division"};
 
-                writer.println(input);
+            for (int opIndex = 0; opIndex < operations.length; opIndex++) {
+                char operation = operations[opIndex];
+                System.out.println("Operation: " + operationNames[opIndex]);
+                for (int i = 1; i <= 10; i++) {
+                    String request = i + " " + (i + 10) + " " + operation;
+                    System.out.println("Sending request: " + request);
 
-                BufferedReader serverReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String result = serverReader.readLine();
-                System.out.println("Result from server: " + result);
+                    writer.println(request);
 
-                long endTime = System.nanoTime();
-                long duration = (endTime - startTime) / 1000000;
-                System.out.println("Time taken: " + duration + "ms");
+                    BufferedReader serverReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    String result = serverReader.readLine();
+                    System.out.println("Result from server: " + result);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            long totalEndTime = System.nanoTime();
+            long totalDuration = (totalEndTime - totalStartTime) / 1000000;
+            System.out.println("Total time taken for all operations: " + totalDuration + "ms");
         }
     }
 }

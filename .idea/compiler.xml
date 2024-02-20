@@ -9,5 +9,8 @@
         <module name="src" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="src" target="20" />
+    </bytecodeTargetLevel>
   </component>
 </project>

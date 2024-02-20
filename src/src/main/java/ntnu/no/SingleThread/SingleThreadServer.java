@@ -29,8 +29,8 @@ public class SingleThreadServer {
 
             String input;
             while ((input = reader.readLine()) != null) {
-                String[] parts = input.split(" "); // Split the input string by spaces
-                if (parts.length == 3) { // Ensure there are three parts: Number Number Operation
+                String[] parts = input.split(" ");
+                if (parts.length == 3) {
                     int num1 = Integer.parseInt(parts[0]);
                     int num2 = Integer.parseInt(parts[1]);
                     char operation = parts[2].charAt(0);
