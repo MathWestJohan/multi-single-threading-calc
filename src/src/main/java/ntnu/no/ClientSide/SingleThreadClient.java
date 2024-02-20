@@ -5,45 +5,66 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class SingleThreadClient {
+
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 5555;
     private static final String[] OPERATIONS = {"10 75 A", "10 56 S", "10 15 M", "10 47 D"};
     private static final AtomicLong totalTime = new AtomicLong(0);
-    private static final int NUM_OPERATIONS_PER_TYPE = 4; // Adjusted to match the operations count
 
     public static void main(String[] args) {
-        long totalStartTime = System.currentTimeMillis();
+        final CountDownLatch latch = new CountDownLatch(4); // Initialize CountDownLatch for 4 threads
 
-        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        for (int i = 0; i < 4; i++) {
+            new Thread(new ClientTask(latch)).start();
+        }
 
-            System.out.println("Connected to server.");
+        try {
+            latch.await(); // Wait for all threads to finish
+            System.out.println("All client operations completed.");
+            System.out.println("Total combined time taken for all operations: " + totalTime.get() + "ms");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println("Main thread interrupted.");
+        }
+    }
 
-            for (String operation : OPERATIONS) {
-                long operationStartTime = System.currentTimeMillis();
+    private static class ClientTask implements Runnable {
+        private final CountDownLatch latch;
 
-                writer.println(operation);
-                System.out.println("Sent: " + operation);
+        public ClientTask(CountDownLatch latch) {
+            this.latch = latch;
+        }
 
-                String response = reader.readLine();
-                System.out.println("Response from server: " + response);
+        @Override
+        public void run() {
+            try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
+                PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                long operationEndTime = System.currentTimeMillis();
-                long operationDuration = operationEndTime - operationStartTime;
-                totalTime.addAndGet(operationDuration);
-                System.out.println("Time taken for operation: " + operationDuration + "ms");
+                System.out.println("Connected to server by " + Thread.currentThread().getName());
+
+                for (String operation : OPERATIONS) {
+                    long operationStartTime = System.currentTimeMillis();
+
+                    writer.println(operation);
+                    System.out.println("Sent: " + operation + " by " + Thread.currentThread().getName());
+
+                    String response = reader.readLine();
+                    System.out.println("Response from server: " + response + " to " + Thread.currentThread().getName());
+
+                    long operationEndTime = System.currentTimeMillis();
+                    totalTime.addAndGet(operationEndTime - operationStartTime);
+                }
+            } catch (IOException e) {
+                System.err.println("An error occurred in " + Thread.currentThread().getName() + ": " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                latch.countDown();
             }
-        } catch (IOException e) {
-            System.err.println("An error occurred: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            long totalEndTime = System.currentTimeMillis();
-            long totalDuration = totalEndTime - totalStartTime;
-            System.out.println("Total time taken for all operations: " + totalDuration + "ms");
         }
     }
 }
