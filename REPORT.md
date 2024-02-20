@@ -22,9 +22,10 @@ Multi-threaded:
 
 Average time: 40ms
 
-The difference between these times are insanely minimal with a difference of ...
-But multithreading wins the race by a small margin. This is because on a multi-threaded 
-server, the job of calculating each operation is done simultaneously on all threads.
+The difference between these times are  minimal with a difference of few milliseconds but multithreading wins the race by a small margin. This is because on a multi-threaded
+server, the job of calculating each operation is done simultaneously on all threads. There will be some difference if the
+program is ran once more, but there is still about a 4 millisecond difference between the two. Multi-threading is the faster one.
+
 
 # Video for the program
 
