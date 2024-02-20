@@ -1,0 +1,11 @@
+
+n	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÖœÊf
+w
+java:S1450
+"URemove the "socket" field and declare it as a local variable in the relevant methods.(Å’¬Úþÿÿÿÿ8í›µ¿Ü1
+W
+java:S1161":Add the "@Override" annotation above this method signature(“–ýþ8î›µ¿Ü1
+G	java:S106"+Replace this use of System.out by a logger.(Ÿ«ø¯8ñ›µ¿Ü1
+L	java:S106 "+Replace this use of System.err by a logger.(¥ŒÂÄþÿÿÿÿ8ñ›µ¿Ü1
+L	java:S106,"+Replace this use of System.out by a logger.(˜Š¿Ûüÿÿÿÿ8ò›µ¿Ü1
+G	java:S106."+Replace this use of System.err by a logger.(ëê«ç8ò›µ¿Ü1
