@@ -1,4 +1,4 @@
-package ntnu.no.MultiThread;
+package ntnu.no.ClientSide;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,13 +12,14 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class MultiThreadClientTest {
     private static final String SERVER_ADDRESS = "localhost";
-    private static final int SERVER_PORT = 6666;
-    private static final int NUM_CLIENTS = 10;
-    private static final String[] OPERATIONS = {"10 5 A", "10 5 S", "10 5 M", "10 5 D"};
+    private static final int SERVER_PORT = 10025;
+    private static final int NUM_CLIENTS = 4;
+    private static final String[] OPERATIONS = {"10 756483 A", "10 564737 S", "10 157483 M", "10 474756 D"};
     private static final AtomicLong totalTime = new AtomicLong(0);
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(NUM_CLIENTS);
+
         long totalStartTime = System.currentTimeMillis();
 
         for (String operation : OPERATIONS) {
