@@ -14,7 +14,7 @@ public class MultiThreadClient {
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 10025;
     private static final int NUM_CLIENTS = 4;
-    private static final String[] OPERATIONS = {"10 756483 A", "10 564737 S", "10 157483 M", "10 474756 D"};
+    private static final String[] OPERATIONS = {"10 75 A", "10 56 S", "10 15 M", "10 47 D"};
     private static final AtomicLong totalTime = new AtomicLong(0);
 
     public static void main(String[] args) {
